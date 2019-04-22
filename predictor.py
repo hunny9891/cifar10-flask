@@ -1,12 +1,15 @@
-from keras.preprocessing import image
-import util
-import numpy as np
 import os
+
+import numpy as np
 import tensorflow as tf
+from keras.preprocessing import image
+
+import util
 from util import *
 
 global model, graph
 graph, model = init()
+
 
 def predict(X_Input):
     with graph.as_default():
@@ -34,6 +37,8 @@ def readAndNormalizeImg():
     return images, X
 
 # Unit Test
+
+
 def main():
     images, X = readAndNormalizeImg()
     preds = predict(X)

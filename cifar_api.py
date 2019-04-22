@@ -1,5 +1,5 @@
-from flask import Flask
-from flask import jsonify
+from flask import Flask, jsonify
+
 import predictor
 import util
 
@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 X = None
 images = None
+
 
 @app.route("/predict", methods=['GET'])
 def predict():
@@ -21,6 +22,7 @@ def predict():
 
     return response
 
-if __name__== "__main__":
+
+if __name__ == "__main__":
     images, X = predictor.readAndNormalizeImg()
     app.run(port=5000)
