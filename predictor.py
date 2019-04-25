@@ -18,23 +18,22 @@ def predict(X_Input):
         return best_pred
 
 
-def readAndNormalizeImg():
-    images = []
-    print("Reading images from directory...")
-    for img_path in os.listdir(util.IMAGES_PATH):
-        img = image.load_img(os.path.join(
-            util.IMAGES_PATH, img_path), target_size=(32, 32, 3))
-        images.append(image.img_to_array(img))
+def readAndNormalizeImg(img):
+    img = image.load_img((img), target_size=(32, 32, 3))
+    img_asarr = image.img_to_array(img)
 
     # Convert to numpy array
-    X = np.asarray(images, dtype=np.float)
+    X = np.asarray(img_asarr, dtype=np.float)
     X /= 255
 
     # Subtract mean pixel
     mean = np.mean(X, axis=0)
     X -= mean
 
-    return images, X
+    # Reshape to four dimension as (1, 32,32,3)
+    X = np.reshape(X, (1,32,32,3))
+    
+    return X
 
 # Unit Test
 

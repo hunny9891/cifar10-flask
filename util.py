@@ -6,7 +6,8 @@ from keras.models import load_model as lm
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
 MODEL_PATH = os.path.join(ROOT_DIR, 'models')
 IMAGES_PATH = os.path.join(ROOT_DIR, 'images')
-MODEL_NAME = 'custom_resnet50.h5'
+MODEL_NAME = 'custom_resnet.h5'
+TEMPLATES_PATH = os.path.join(ROOT_DIR, 'templates')
 
 LABEL_DICT = {
     0: 'airplane',

@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, render_template
 
 import predictor
 import util
@@ -8,15 +8,21 @@ app = Flask(__name__)
 X = None
 images = None
 
+@app.route("/")
+def pilot():
+    return render_template('pilot.html')
 
-@app.route("/predict", methods=['GET'])
+
+@app.route("/predict", methods=['POST'])
 def predict():
+    rawImage = request.files['file']
+    X = predictor.readAndNormalizeImg(rawImage)
+
     preds = predictor.predict(X)
-    responseList = []
-    for pred in preds:
-        responseList.append(util.LABEL_DICT[pred])
+    trueLabel = util.LABEL_DICT[preds[0]]
+
     data = {
-        "predictions": responseList
+        "prediction": trueLabel
     }
     response = jsonify(data)
 
@@ -24,5 +30,4 @@ def predict():
 
 
 if __name__ == "__main__":
-    images, X = predictor.readAndNormalizeImg()
-    app.run(port=5000)
+    app.run(host='0.0.0.0', port=8080)
